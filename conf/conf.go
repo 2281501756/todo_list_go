@@ -16,15 +16,17 @@ var (
 	DbDatabase string
 )
 
-func init() {
+func Init() {
 	file, err := ini.Load("./conf/config.ini")
 	if err != nil {
 		panic("读取配置失败")
 	}
 	loadService(file)
 	loadMysql(file)
-	path := fmt.Sprintf("%s:%stcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbDatabase)
+	path := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbDatabase)
+	fmt.Println(path)
 	model.ConnectMysql(path)
+	model.Migration()
 }
 
 func loadService(file *ini.File) {
