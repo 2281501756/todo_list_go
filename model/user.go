@@ -22,5 +22,5 @@ func (this *User) SetPassword(password string) error {
 
 func (this *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(this.Password), []byte(password))
-	return err != nil
+	return err == nil
 }
