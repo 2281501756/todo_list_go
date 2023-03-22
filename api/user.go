@@ -26,6 +26,6 @@ func UserLogin(c *gin.Context) {
 	}
 }
 
-func UserGet(c *gin.Context) {
-	c.JSON(200, service.GetAll())
+func UserGetALl(c *gin.Context) {
+	c.JSON(200, service.GetAllUser())
 }

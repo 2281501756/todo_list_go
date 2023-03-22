@@ -24,7 +24,6 @@ func Init() {
 	loadService(file)
 	loadMysql(file)
 	path := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbDatabase)
-	fmt.Println(path)
 	model.ConnectMysql(path)
 	model.Migration()
 }

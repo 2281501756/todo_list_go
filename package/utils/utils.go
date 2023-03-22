@@ -11,7 +11,6 @@ var JWTSecret = "QWESAQWE123da"
 type Claims struct {
 	Id       uint   `json:"id"`
 	UserName string `json:"userName"`
-	Password string `json:"password"`
 	jwt.StandardClaims
 }
 
@@ -21,7 +20,6 @@ func GeneratorToken(id uint, username string, password string) (string, error) {
 	claims := Claims{
 		Id:             id,
 		UserName:       username,
-		Password:       password,
 		StandardClaims: jwt.StandardClaims{ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), Issuer: "todo_list"},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

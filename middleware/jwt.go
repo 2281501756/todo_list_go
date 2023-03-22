@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"time"
 	"todo_list/package/utils"
@@ -16,12 +15,17 @@ func JWT() gin.HandlerFunc {
 			code = 404
 		} else {
 			claim, err := utils.ParseToken(token)
-			fmt.Println(claim, err)
 			if err != nil {
 				code = 403
 			} else if claim.ExpiresAt < time.Now().Unix() {
 				code = 401
 			}
+			if claim == nil {
+				c.JSON(200, serializer.Response{Msg: "token信息错误", Status: code})
+				c.Abort()
+				return
+			}
+			c.Set("id", claim.Id)
 		}
 		if code != 200 {
 			c.JSON(200, serializer.Response{Msg: "token信息错误", Status: code})

@@ -57,7 +57,7 @@ func (service *UserService) Login() serializer.Response {
 			Msg:    "token生成失败",
 		}
 	}
-
+	user.Password = ""
 	return serializer.Response{
 		Status: 200,
 		Data: map[string]any{
@@ -68,11 +68,12 @@ func (service *UserService) Login() serializer.Response {
 	}
 }
 
-func GetAll() serializer.Response {
+func GetAllUser() serializer.Response {
 	var users []model.User
 	model.DB.Find(&users)
 	return serializer.Response{
 		Status: 200,
 		Data:   users,
+		Msg:    "查询成功",
 	}
 }

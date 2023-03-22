@@ -8,6 +8,7 @@ import (
 
 func CreateRoutes() *gin.Engine {
 	router := gin.Default()
+	router.Use(middleware.Cors)
 	v1 := router.Group("/api/v1")
 	{
 		v1.POST("/user/register", api.UserRegister)
@@ -16,7 +17,11 @@ func CreateRoutes() *gin.Engine {
 	authed := v1.Group("/")
 	authed.Use(middleware.JWT())
 	{
-		authed.GET("/user", api.UserGet)
+		authed.GET("/user", api.UserGetALl)
+		authed.GET("/task", api.TaskGetALL)
+		authed.POST("/task", api.TaskCreate)
+		authed.PUT("/task", api.TaskUpdate)
+		authed.DELETE("/task", api.TaskDelete)
 	}
 	return router
 }
