@@ -6,9 +6,9 @@ import (
 )
 
 type User struct {
-	gorm.Model
-	UserName string `gorm:"unique"`
-	Password string
+	gorm.Model `gorm:"serializer:json"`
+	UserName   string `gorm:"unique" json:"user_name"`
+	Password   string `json:"password"`
 }
 
 func (this *User) SetPassword(password string) error {
