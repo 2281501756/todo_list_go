@@ -18,6 +18,7 @@ func CreateRoutes() *gin.Engine {
 	authed.Use(middleware.JWT())
 	{
 		authed.GET("/user", api.UserGetALl)
+
 		authed.GET("/task", api.TaskGetALL)
 		authed.POST("/task", api.TaskCreate)
 		authed.PUT("/task", api.TaskUpdate)
