@@ -17,6 +17,16 @@ type LoginResponseType = {
   user: User
 }
 
+type Task = {
+  ID: string
+  userId: string
+  title: string
+  content: string
+  status: number
+  startTime: number
+  endTime: number
+  user: User
+}
 export const ApiLogin = (data: LoginRequestType) => {
   return request<LoginResponseType>({
     url: '/v1/user/login',
@@ -32,15 +42,14 @@ export const ApiLogin = (data: LoginRequestType) => {
   })
 }
 
-type Task = {
-  ID: string
-  userId: string
-  title: string
-  content: string
-  status: number
-  startTime: number
-  endTime: number
-  user: User
+export const ApiRegister = (data: LoginRequestType) => {
+  return request<LoginResponseType>({
+    url: '/v1/user/register',
+    method: 'POST',
+    data: {
+      ...data
+    }
+  })
 }
 
 export const ApiGettask = () => {

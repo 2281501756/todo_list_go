@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import img from '../assets/4.png'
 import { ApiLogin } from '../api/index'
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type formType = {
   user_name: string
@@ -9,6 +11,7 @@ type formType = {
 }
 
 function Login() {
+  const navigate = useNavigate()
   const { register, handleSubmit } = useForm<formType>({
     defaultValues: {
       user_name: '',
@@ -18,6 +21,9 @@ function Login() {
   const submit = async (data: formType) => {
     let res = await ApiLogin(data)
     console.log(res)
+  }
+  const handleToRegister = () => {
+    navigate('/register')
   }
 
   return (
@@ -38,9 +44,9 @@ function Login() {
             <span>密码</span>
             <input type="password" {...register('password')}></input>
           </div>
-          <div>
+          <div className='body-box'>
             <button>登录</button>
-            <button>注册</button>
+            <button onClick={handleToRegister}>切换到注册</button>
           </div>
         </form>
       </div>
@@ -73,7 +79,16 @@ const RootStyle = styled.div`
     .table {
       & > div {
         margin: 10px;
+        display: flex;
+        justify-content: center;
       }
     }
   }
+
+  .body-box {
+    text-align: center;
+    & > button {
+      margin: 10px;
+    }
+}
 `
