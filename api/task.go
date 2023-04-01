@@ -3,12 +3,22 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"todo_list/serializer"
 	"todo_list/service"
 )
 
 func TaskGetALL(c *gin.Context) {
 	res := service.GetALlTask()
+	c.JSON(200, res)
+}
+func TaskGetById(c *gin.Context) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		c.JSON(200, serializer.ResponseError{Msg: "请传入正确的taskID"})
+		return
+	}
+	res := service.GetTaskById(id)
 	c.JSON(200, res)
 }
 

@@ -24,8 +24,28 @@ func GetALlTask() serializer.Response {
 	model.DB.Model(model.Task{}).Preload("User").Find(&task)
 	return serializer.Response{
 		Status: 200,
-		Data:   task,
+		Data:   serializer.BuildTasks(task),
 		Msg:    "查询成功",
+	}
+}
+func GetTaskById(id int64) serializer.Response {
+	var task model.Task
+	var count int64
+	err := model.DB.Preload("User").Find(&task, id).Count(&count).Error
+	if err != nil {
+		return serializer.Response{Status: 500, Msg: "查询失败", Err: err.Error()}
+	}
+	if count == 0 {
+		return serializer.Response{
+			Status: 200,
+			Msg:    "没有该用户",
+		}
+	}
+	task.ViewAdd()
+	return serializer.Response{
+		Status: 200,
+		Msg:    "查询成功",
+		Data:   serializer.BuildTask(&task),
 	}
 }
 func DeleteTask(id uint) serializer.Response {
