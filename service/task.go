@@ -1,7 +1,9 @@
 package service
 
 import (
+	"context"
 	"fmt"
+	"todo_list/cache"
 	"todo_list/model"
 	"todo_list/serializer"
 )
@@ -63,6 +65,27 @@ func DeleteTask(id uint) serializer.Response {
 		Status: 200,
 		Msg:    "删除成功",
 		Data:   task,
+	}
+}
+func GetRange() serializer.Response {
+	res, err := cache.RDB.ZRevRange(context.Background(), cache.TaskRankKey, 0, 10).Result()
+	if err != nil {
+		return serializer.Response{
+			Status: 500,
+			Msg:    "查询失败",
+			Err:    err.Error(),
+		}
+	}
+	tasks := make([]model.Task, 0)
+	for _, i := range res {
+		task := model.Task{}
+		model.DB.Preload("User").Find(&task, i)
+		tasks = append(tasks, task)
+	}
+	return serializer.Response{
+		Status: 200,
+		Msg:    "查询成功",
+		Data:   serializer.BuildTasks(tasks),
 	}
 }
 

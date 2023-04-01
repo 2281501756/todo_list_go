@@ -20,6 +20,7 @@ func CreateRoutes() *gin.Engine {
 		authed.GET("/user", api.UserGetALl)
 
 		authed.GET("/task", api.TaskGetALL)
+		authed.GET("/task/rank", api.TaskRank)
 		authed.GET("/task/:id", api.TaskGetById)
 		authed.POST("/task", api.TaskCreate)
 		authed.PUT("/task", api.TaskUpdate)

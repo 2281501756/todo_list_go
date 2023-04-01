@@ -21,6 +21,10 @@ func TaskGetById(c *gin.Context) {
 	res := service.GetTaskById(id)
 	c.JSON(200, res)
 }
+func TaskRank(c *gin.Context) {
+	res := service.GetRange()
+	c.JSON(200, res)
+}
 
 func TaskCreate(c *gin.Context) {
 	var taskCreateService service.TaskCreateService
