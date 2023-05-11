@@ -1,0 +1,6 @@
+db:
+  root: "root"
+  password: "root"
+  path: "127.0.0.1"
+  port: "3306"
+  name: "todo_list1"
