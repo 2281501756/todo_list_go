@@ -1,9 +1,12 @@
 package main
 
-import "todo_list/initialize"
+import (
+	"todo_list/initialize"
+	"todo_list/router"
+)
 
 func main() {
-	//r := router.NewRouter()
-	//r.Run()
 	initialize.Init()
+	r := router.NewRouter()
+	r.Run()
 }

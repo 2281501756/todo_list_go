@@ -13,7 +13,7 @@ func InitConf() {
 	vip.AddConfigPath("./config")
 	err := vip.ReadInConfig()
 	if err != nil {
-		fmt.Println("配置文件读取错误")
+		panic("配置文件读取失败")
 	}
 	err = vip.Unmarshal(&global.Config)
 	if err != nil {
